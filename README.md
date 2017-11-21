@@ -1,1 +1,4 @@
-# csc475
+# CSC 475: Music Information Retrieval Techniques
+
+Fall 2017 UVic
+
