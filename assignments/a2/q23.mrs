@@ -1,0 +1,26 @@
+Series {
+    inSamples = 1024
+    //change filename for other audio
+    -> input: SoundFileSource { filename = "qbhexamples.wav" onSamples = 1024 inSamples = 1024 }
+    -> MixToMono
+    //window size of 2048
+    -> ShiftInput { winSize = 2048 }
+    -> Fanout {
+        -> Series {
+            -> Spectrum
+            -> PowerSpectrum
+            -> Centroid
+            //compute mean of last 20 values 
+            -> Memory { memSize = 20 }
+            -> Mean
+            //convert result to control stream
+            -> centroid: FlowToControl
+        }
+        //replace the playback of noise that follows the RMS energy
+        -> Series {
+            -> SineSource { frequency = (centroid /value *(input / israte / 2)) }
+            -> AudioSink
+        }
+    }
+    + done = (input/hasData == false)
+}

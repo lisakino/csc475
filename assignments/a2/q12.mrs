@@ -1,0 +1,14 @@
+Series {
+    inSamples = 2048
+    -> input: SoundFileSource { filename = "1_4_mix.wav.wav" }
+    -> Windowing { size = 2048 }
+    //autocorrelation!
+    -> AutoCorrelation
+    -> Peaker
+    -> MaxArgMax
+    -> Transposer
+    -> selection: Selector { disable = 0 }
+
+    -> sink: CsvSink { filename = "q12.csv" }
+    + done = (input/hasData == false)
+}

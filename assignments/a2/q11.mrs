@@ -1,0 +1,15 @@
+Series {
+    inSamples = 2048
+    //change input source for other two audio
+    -> input: SoundFileSource { filename = "1_4_mix.wav" }
+    -> Windowing { size = 2048 }
+    -> Spectrum
+    -> PowerSpectrum { spectrumType = "magnitude" }
+    -> Transposer
+    -> max: MaxArgMax
+    -> Transposer
+    -> selection: Selector { disable = 0 }
+
+    -> sink: CsvSink { filename = "q1.csv" }
+    + done = (input/hasData == false)
+}
