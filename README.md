@@ -2,3 +2,4 @@
 
 Fall 2017 UVic
 
+Project - Theory Informed Automatic Music Transcription 
